@@ -33,17 +33,15 @@ defmodule <%= web_base %>.Coherence.UserEmail do
   pages. The email includes a link to reset the user's password.
   """
   def password(user, url) do
-    Task.start(fn ->
-      %Email{}
-      |> from(from_email())
-      |> to(user_email(user))
-      |> add_reply_to()
-      |> subject(
-        dgettext("coherence", "%{site_name} - Reset password instructions", site_name: site_name())
-      )
-      |> render_body("password.html", %{url: url, name: first_name(user.name)})
-      |> log()
-    end)
+    %Email{}
+    |> from(from_email())
+    |> to(user_email(user))
+    |> add_reply_to()
+    |> subject(
+      dgettext("coherence", "%{site_name} - Reset password instructions", site_name: site_name())
+    )
+    |> render_body("password.html", %{url: url, name: first_name(user.name)})
+    |> log()
   end
 
   @doc """
@@ -71,15 +69,14 @@ defmodule <%= web_base %>.Coherence.UserEmail do
           user_email(user)
         }
       end
-    Task.start(fn ->
-      %Email{}
-      |> from(from_email())
-      |> to(email)
-      |> add_reply_to()
-      |> subject(subject)
-      |> render_body(template, %{url: url, name: first_name(user.name)})
-      |> log()
-    end)
+
+    %Email{}
+    |> from(from_email())
+    |> to(email)
+    |> add_reply_to()
+    |> subject(subject)
+    |> render_body(template, %{url: url, name: first_name(user.name)})
+    |> log()
   end
 
   @doc """
@@ -89,21 +86,19 @@ defmodule <%= web_base %>.Coherence.UserEmail do
   register for an account.
   """
   def invitation(invitation, url) do
-    Task.start(fn ->
-      %Email{}
-      |> from(from_email())
-      |> to(user_email(invitation))
-      |> add_reply_to()
-      |> subject(
-        dgettext(
-          "coherence",
-          "%{site_name} - Invitation to create a new account",
-          site_name: site_name()
-        )
+    %Email{}
+    |> from(from_email())
+    |> to(user_email(invitation))
+    |> add_reply_to()
+    |> subject(
+      dgettext(
+        "coherence",
+        "%{site_name} - Invitation to create a new account",
+        site_name: site_name()
       )
-      |> render_body("invitation.html", %{url: url, name: first_name(invitation.name)})
-      |> log()
-    end)
+    )
+    |> render_body("invitation.html", %{url: url, name: first_name(invitation.name)})
+    |> log()
   end
 
   @doc """
@@ -113,17 +108,15 @@ defmodule <%= web_base %>.Coherence.UserEmail do
   contains a link with an unlock token.
   """
   def unlock(user, url) do
-    Task.start(fn ->
-      %Email{}
-      |> from(from_email())
-      |> to(user_email(user))
-      |> add_reply_to()
-      |> subject(
-        dgettext("coherence", "%{site_name} - Unlock Instructions", site_name: site_name())
-      )
-      |> render_body("unlock.html", %{url: url, name: first_name(user.name)})
-      |> log()
-    end)
+    %Email{}
+    |> from(from_email())
+    |> to(user_email(user))
+    |> add_reply_to()
+    |> subject(
+      dgettext("coherence", "%{site_name} - Unlock Instructions", site_name: site_name())
+    )
+    |> render_body("unlock.html", %{url: url, name: first_name(user.name)})
+    |> log()
   end
 
   defp add_reply_to(mail) do
